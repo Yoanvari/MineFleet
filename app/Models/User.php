@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -57,5 +58,20 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'requester_id');
+    }
+
+    public function approvals()
+    {
+        return $this->hasMany(ReservationApproval::class, 'approver_id');
+    }
+
+    public function fuelLogs()
+    {
+        return $this->hasMany(FuelLog::class, 'recorded_by');
     }
 }
