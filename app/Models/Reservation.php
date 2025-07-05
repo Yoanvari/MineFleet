@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     protected $fillable = [
-        'reservation_code', 'vehicle_id', 'driver_id', 'requester_id', 'destination',
+        'reservation_code', 'vehicle_id', 'driver_id', 'requester_id', 'destination_id',
         'start_datetime', 'end_datetime', 'purpose', 'status',
     ];
 
