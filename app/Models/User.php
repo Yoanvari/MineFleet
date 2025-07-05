@@ -60,6 +60,11 @@ class User extends Authenticatable
             ->implode('');
     }
 
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
     public function reservations()
     {
         return $this->hasMany(Reservation::class, 'requester_id');
