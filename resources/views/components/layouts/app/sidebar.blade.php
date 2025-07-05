@@ -13,21 +13,55 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    {{-- admin --}}
+                    @if (auth()->user()->role === 'admin')
+                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="folder-git-2" :href="route('admin.reservations')" wire:navigate>
+                            {{ __('Vehicle Reservation') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                            {{ __('Drivers') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                            {{ __('Vehicles') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                            {{ __('Fuel Logs') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                            {{ __('Service Records') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                            {{ __('Reports') }}
+                        </flux:navlist.item>
+                    @endif
+
+                    {{-- approver --}}
+                    @if (auth()->user()->role === 'approver')
+                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                            {{ __('Pending Approvals') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                            {{ __('Approval History') }}
+                        </flux:navlist.item>
+                    @endif
                 </flux:navlist.group>
             </flux:navlist>
-
+            
             <flux:spacer />
-
-            <flux:navlist variant="outline">
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
 
             <!-- Desktop User Menu -->
             <flux:dropdown class="hidden lg:block" position="bottom" align="start">
