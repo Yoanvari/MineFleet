@@ -9,40 +9,56 @@ test('login screen can be rendered', function () {
     $response->assertStatus(200);
 });
 
-test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+test('admins can authenticate and are redirected to admin dashboard', function () {
+    $admin = User::factory()->create([
+        'role' => 'admin',
+        'password' => bcrypt('password'),
+    ]);
 
-    $response = LivewireVolt::test('auth.login')
-        ->set('email', $user->email)
+    LivewireVolt::test('auth.login')
+        ->set('email', $admin->email)
         ->set('password', 'password')
-        ->call('login');
-
-    $response
+        ->call('login')
         ->assertHasNoErrors()
-        ->assertRedirect(route('dashboard', absolute: false));
+        ->assertRedirect(route('admin.dashboard', absolute: false));
 
-    $this->assertAuthenticated();
+    $this->assertAuthenticatedAs($admin);
 });
 
-test('users can not authenticate with invalid password', function () {
-    $user = User::factory()->create();
+test('approvers can authenticate and are redirected to approver dashboard', function () {
+    $approver = User::factory()->create([
+        'role' => 'approver',
+        'password' => bcrypt('password'),
+    ]);
 
-    $response = LivewireVolt::test('auth.login')
-        ->set('email', $user->email)
+    LivewireVolt::test('auth.login')
+        ->set('email', $approver->email)
+        ->set('password', 'password')
+        ->call('login')
+        ->assertHasNoErrors()
+        ->assertRedirect(route('approver.dashboard', absolute: false));
+
+    $this->assertAuthenticatedAs($approver);
+});
+
+test('users cannot authenticate with an invalid password, regardless of role', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+
+    LivewireVolt::test('auth.login')
+        ->set('email', $admin->email)
         ->set('password', 'wrong-password')
-        ->call('login');
-
-    $response->assertHasErrors('email');
+        ->call('login')
+        ->assertHasErrors('email');
 
     $this->assertGuest();
 });
 
-test('users can logout', function () {
-    $user = User::factory()->create();
+test('users can log out successfully', function () {
+    $user = User::factory()->create(['role' => 'approver']);
 
-    $response = $this->actingAs($user)->post('/logout');
-
-    $response->assertRedirect('/');
+    $this->actingAs($user)
+        ->post('/logout')
+        ->assertRedirect('/');
 
     $this->assertGuest();
 });
