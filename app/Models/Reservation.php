@@ -28,7 +28,7 @@ class Reservation extends Model
 
     public function location()
     {
-        return $this->belongsTo(Location::class, 'destination');
+        return $this->belongsTo(Location::class, 'destination_id');
     }
 
     public function approvals()
