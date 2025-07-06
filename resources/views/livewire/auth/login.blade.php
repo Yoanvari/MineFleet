@@ -40,7 +40,23 @@ new #[Layout('components.layouts.auth')] class extends Component {
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $user = Auth::user();
+
+        // Redirect berdasarkan role tanpa default
+        if ($user->role === 'admin') {
+            $this->redirectIntended(default: route('admin.dashboard', absolute: false), navigate: true);
+        } elseif ($user->role === 'approver') {
+            $this->redirectIntended(default: route('approver.dashboard', absolute: false), navigate: true);
+        } else {
+            // Jika role tidak dikenali, logout paksa dan kembalikan ke login
+            Auth::logout();
+            Session::invalidate();
+            Session::regenerateToken();
+
+            throw ValidationException::withMessages([
+                'email' => 'Your account is not authorized to access this system.',
+            ]);
+        }
     }
 
     /**

@@ -7,54 +7,54 @@
         <flux:sidebar sticky stashable class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
-            <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
+            <div class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
                 <x-app-logo />
-            </a>
+            </div>
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     {{-- admin --}}
                     @if (auth()->user()->role === 'admin')
-                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="home" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>
                             {{ __('Dashboard') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="folder-git-2" :href="route('admin.reservations')" wire:navigate>
+                        <flux:navlist.item icon="clipboard-document-list" :href="route('admin.reservations')" wire:navigate>
                             {{ __('Vehicle Reservation') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="users" :href="route('admin.drivers')" wire:navigate>
                             {{ __('Drivers') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="truck" :href="route('admin.vehicles')" wire:navigate>
                             {{ __('Vehicles') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="fire" :href="route('admin.fuel-logs')" wire:navigate>
                             {{ __('Fuel Logs') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="wrench-screwdriver" :href="route('admin.service-records')" wire:navigate>
                             {{ __('Service Records') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="book-open-text" :href="route('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="chart-bar" :href="route('admin.reports')" wire:navigate>
                             {{ __('Reports') }}
                         </flux:navlist.item>
                     @endif
 
                     {{-- approver --}}
                     @if (auth()->user()->role === 'approver')
-                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="home" :href="route('approver.dashboard')" :current="request()->routeIs('approver.dashboard')" wire:navigate>
                             {{ __('Dashboard') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="inbox-arrow-down" :href="route('approver.pending-approvals')" wire:navigate>
                             {{ __('Pending Approvals') }}
                         </flux:navlist.item>
 
-                        <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                        <flux:navlist.item icon="check-circle" :href="route('approver.approval-history')" wire:navigate>
                             {{ __('Approval History') }}
                         </flux:navlist.item>
                     @endif
