@@ -10,7 +10,7 @@ MineFleet is a web-based application designed for managing and monitoring the us
 | ------------ | -------------- |
 | PHP          | 8.2+           |
 | Laravel      | 12.x           |
-| MySQL        | 8.0+           |
+| MySQL        | 10.0+          |
 | Node.js      | 22+ (for Vite) |
 | Tailwind CSS | 4.x            |
 | Laravel Volt | ✅ Yes         |
