@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Vehicle;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class VehicleSeeder extends Seeder
 {
@@ -12,10 +13,14 @@ class VehicleSeeder extends Seeder
      */
     public function run(): void
     {
-        // 10 mobil penumpang
+        $passengerNames = [
+            'Toyota Avanza', 'Honda Mobilio', 'Suzuki Ertiga', 'Mitsubishi Xpander', 'Daihatsu Terios',
+            'Nissan Livina', 'Hyundai Stargazer', 'Kia Carens', 'Wuling Confero', 'Chevrolet Spin'
+        ];
+
         foreach (range(1, 10) as $i) {
             Vehicle::create([
-                'name'         => "Passenger Car {$i}",
+                'name'         => Arr::random($passengerNames),
                 'license_plate'=> fake()->bothify('B #### ??'),
                 'type'         => 'passenger',
                 'ownership'    => $i <= 6 ? 'owned' : 'rented',
@@ -23,10 +28,13 @@ class VehicleSeeder extends Seeder
             ]);
         }
 
-        // 5 truk kargo
-        foreach (range(1, 5) as $i) {
+        $cargoNames = [
+            'Isuzu Elf', 'Mitsubishi Fuso', 'Toyota Dyna', 'Hino Dutro', 'Suzuki Carry'
+        ];
+
+        foreach (range(1, 10) as $i) {
             Vehicle::create([
-                'name'         => "Cargo Truck {$i}",
+                'name'         => Arr::random($cargoNames),
                 'license_plate'=> fake()->bothify('L #### ??'),
                 'type'         => 'cargo',
                 'ownership'    => $i <= 3 ? 'owned' : 'rented',

@@ -16,12 +16,14 @@ class LocationSeeder extends Seeder
         Location::create([
             'name'   => 'Head Office',
             'type'   => 'head_office',
+            'region' => 'Kal-Teng',
         ]);
 
         // 1 kantor cabang
         Location::create([
             'name'   => 'Branch Office',
             'type'   => 'branch_office',
+            'region' => 'Kal-Teng',
         ]);
 
         // 6 tambang
@@ -29,6 +31,7 @@ class LocationSeeder extends Seeder
             Location::create([
                 'name'   => "Mine Site {$i}",
                 'type'   => 'mine_site',
+                'region' => 'Kal-Teng',
             ]);
         }
     }
